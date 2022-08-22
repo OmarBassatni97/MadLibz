@@ -26,9 +26,38 @@
  * There are multiple ways to do this, but you may want to use regular expressions.
  * Please go through this lesson: https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/regular-expressions/
  */
+
+let arrOfObj = [];
+const idArray = [];
+
 function parseStory(rawStory) {
-  // Your code here.
-  return rawStory
+
+  const wordMap = {
+    n: "noun",
+    a: "adjective",
+    v: "verb",
+  }
+  let arrOfWords = rawStory.split(/\s|\]/);
+  const regexForCapture = /^\w+(?!...[n|a|v])/;
+  const regexAllSpecialWords = /^\w+(?:...[n|a|v])/;
+  for (let i = 0; i < arrOfWords.length; i++) {
+    if (regexAllSpecialWords.test(arrOfWords[i])) {
+      let pos = arrOfWords[i][(arrOfWords[i].length - 1)];
+      let word = (arrOfWords[i].match(regexForCapture)[0]);
+      arrOfObj.push({ word: word, pos: wordMap[pos] });
+    }
+    else if (arrOfWords[i] === "") {
+      continue;
+    }
+    else {
+      let word = arrOfWords[i];
+      arrOfObj.push({ word: word })
+    }
+  }
+
+  return arrOfObj;
+
+
 }
 /**
  * All your other JavaScript code goes here, inside the function. Don't worry about
@@ -44,9 +73,9 @@ function parseStory(rawStory) {
 getRawStory()
   .then(parseStory)
   .then((processedStory) => {
-    console.log('proccesed story',processedStory);
+    console.log('proccesed story', processedStory);
   });
 
-  function firstFunction(){
-    
-  }
+function firstFunction() {
+
+}
